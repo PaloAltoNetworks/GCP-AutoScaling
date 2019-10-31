@@ -1,0 +1,115 @@
+# Copyright 2016 Google Inc. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+imports:
+- path: vm-series.py
+- path: network.py
+- path: subnetwork.py
+- path: external-appln-lb.py
+- path: external-network-lb.py
+- path: firewall.py
+- path: vm-series-fw.py
+- path: cloud-nat.py
+- path: pubsub.py
+resources:
+- name: panorama-pubsub
+  type: pubsub.py
+- name: vm-series-fw
+  type: vm-series-fw.py
+  properties:
+    region: us-east1
+    zones:
+    - us-east1-b
+    - us-east1-c
+    # nlb or alb are the possible values.
+    lb-type: alb 
+    cloud-nat: yes
+    forwarding-rule-port: 80
+    connection-draining-timeout: 300
+    ssl-certificate-url: ''
+
+    # List out the apps and its corresponding
+    # named port.
+    urlPath-namedPort-maps: 
+    - appName: app1
+      namedPort: 80
+      urlMapPaths:
+        - '/app1'
+        - '/app1/*' 
+    - appName: app2
+      namedPort: 81
+      urlMapPaths:
+        - '/app2'
+        - '/app2/*' 
+
+    ## ssh key PUBLIC to login to the firewall.
+    sshkey: 'admin:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe0gJHd8okxPGWXsmdTdcZBJNI6ONT/NSz6INs2CNtKWtr+MDh5W79Hn3mlV3I4k2nqkdy3+nEZLbMtlYgt3+jSwtiR53yGHVpkozivnJqQ9YXixirTZYNAnzWPlF6eA4XN9XF6Fnga88GsMWcy2Lv04oB5xlCwpXDSygpaogV4ITb9s2P4Laer3voR1SaoQumDfzadcXzzJE+9lm01+KjTeYItjDjnHWY9r1kIAGi4WIRdM4KruQMCS5lXpT4U1wVC+K56rI+pnk5K6/Zqg3XMJPl3PDoTKXL8t0SRnOKaKV73NR5KnfpsNfwGxG8aQtEkeMCZIxX+6WOnRf/N4K3 rramalinga@apt1.paloaltonetworks.local'
+
+    # GCP storage bucket where the bootstrap package is hosted.
+    bootstrap-bucket: rr-bootstrap-1
+
+    image: vmseries-byol-814
+    machine-type: n1-standard-4
+
+    # Service account should have the following permissions in GCP
+    #     - Deployment Manager Editor
+    #     Compute Admin
+    #     Kubernetes Engine Viewer
+    #     Kubernetes Engine Cluster Admin
+    #     Pub/Sub Admin
+    #     Storage Admin
+    #     Monitoring Metric Writer
+    #     Stackdriver Account Editor
+    service-account: rramalinga-autoscale@gcp-autoscale-host.iam.gserviceaccount.com 
+    
+    fw-instance-tag: vm-series-fw
+    # Possible values for metrics.
+    #     panSessionActive
+    #     panSessionUtilization
+    #     DataPlaneCPUUtilizationPct
+    #     DataPlanePacketBufferUtilization
+    #     panSessionUtilization
+    metric: custom.googleapis.com/VMSeries/panSessionActive
+    max-size: 2 
+    min-size: 1
+    target-type: GAUGE
+    util-target: 100 
+
+    # Greenfield deployment
+    mgmt-network-cidr: 172.22.2.0/24
+    untrust-network-cidr: 172.22.1.0/24
+    trust-network-cidr: 172.22.3.0/24
+    mgmt-network-access-source-range:
+    - 199.167.54.229/32
+    - 199.167.52.5/32
+    mgmt-network-access-ports:
+    - 22
+    - 443
+
+    ###Uncomment followings for using existing networks/subnets
+    #mgmt-network:  my-mgmt-network
+    #mgmt-subnet:   my-mgmt-subnet
+    #trust-network: my-trust-network
+    #trust-subnet:  my-trust-subnet
+    #untrust-network: my-untrust-network
+    #untrust-subnet:  my-untrust-subnet
+
+outputs:
+- name: trust-network-name
+  value: $(ref.vm-series-fw.trust-network-name)                 
+- name: trust-subnet-name
+  value: $(ref.vm-series-fw.trust-subnet-name)                 
+- name: deployment-name
+  value: $(ref.vm-series-fw.deployment-name)                 
+- name: panorama-pubsub-topic
+  value: $(ref.panorama-pubsub.vm-series-fw-template-pubsub-topic)

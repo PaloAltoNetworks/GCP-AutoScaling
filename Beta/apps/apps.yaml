@@ -1,0 +1,56 @@
+# Copyright 2016 Google Inc. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+imports:
+- path: web-vm-example.py
+- path: internal-lb.py
+- path: pubsub.py
+- path: firewall.py
+- path: apps.py
+resources:
+- name: apps-config
+  type: apps.py
+  properties:
+    host-project: gcp-autoscale-host
+    fw-deployment-name: rr-fw-template-9
+    region: us-east1 
+    zones:
+      - us-east1-b
+      - us-east1-c
+
+    # We will install a LAMP stack by default
+    #app-image: debian-9
+    app-machine-type: n1-standard-2
+    app-instance-tag: web-vm
+    ### ssh key PUBLIC
+    sshkey: 'gcp:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe0gJHd8okxPGWXsmdTdcZBJNI6ONT/NSz6INs2CNtKWtr+MDh5W79Hn3mlV3I4k2nqkdy3+nEZLbMtlYgt3+jSwtiR53yGHVpkozivnJqQ9YXixirTZYNAnzWPlF6eA4XN9XF6Fnga88GsMWcy2Lv04oB5xlCwpXDSygpaogV4ITb9s2P4Laer3voR1SaoQumDfzadcXzzJE+9lm01+KjTeYItjDjnHWY9r1kIAGi4WIRdM4KruQMCS5lXpT4U1wVC+K56rI+pnk5K6/Zqg3XMJPl3PDoTKXL8t0SRnOKaKV73NR5KnfpsNfwGxG8aQtEkeMCZIxX+6WOnRf/N4K3 rramalinga@apt1.paloaltonetworks.local'
+    #service-account: rr-gcp-autoscaling@vmseries-dev-242318.iam.gserviceaccount.com
+    trust-network: rr-fw-template-9-trust-nw
+    trust-subnet: rr-fw-template-9-trust-sn
+    trust-subnet-cidr: 172.22.3.0/24
+   
+    # The topic created by the firewall deployment.
+    # This template will post a message to the topic
+    # which will program the required config in the
+    # firewall to forward traffic.
+    vm-series-fw-template-topic:  projects/gcp-autoscale-host/topics/rr-fw-template-9-gcp-autoscale-host-panorama-apps-deployment
+    ilb-port: 80
+    urlPath-namedPort: 80
+outputs:
+- name: internal-load-balancer-ip
+  value: $(ref.apps-config.ilb-ip)
+- name: internal-load-balancer-port
+  value: $(ref.apps-config.ilb-port)
+- name: urlPath-namedPort 
+  value: $(ref.apps-config.urlPath-namedPort)
+
