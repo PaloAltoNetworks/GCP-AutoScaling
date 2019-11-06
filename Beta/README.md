@@ -3,7 +3,7 @@
 The Google Cloud Platform Plugin for Panorama 2.0 Beta  helps you configure a connection from
 Panorama to a GCP project and VMs deployed within it. You can use the web interface to
 globally enable monitoring for a GCP project, configure VM monitoring for a GCP project, and
-configure connections to VMs in autoscaling. Once a connection
+configure connections to VMs in autoscaling deployments. Once a connection
 is established, the plugin can retrieve predefined or user-defined metadata (predefined
 attributes, user-defined labels for VMs, and user-defined network tags as listed in Attributes,
 Tags, and Labels).
