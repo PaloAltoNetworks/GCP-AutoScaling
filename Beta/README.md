@@ -1,6 +1,6 @@
 # AutoScaling the VM-Series on Google Cloud Platform
 
-The Google Cloud Platform Plugin for Panorama 1.0 Beta2  helps you configure a connection from
+The Google Cloud Platform Plugin for Panorama 2.0 Beta  helps you configure a connection from
 Panorama to a GCP project and VMs deployed within it. You can use the web interface to
 globally enable monitoring for a GCP project, configure VM monitoring for a GCP project, and
 configure connections to VMs in autoscaling. Once a connection
