@@ -1,12 +1,22 @@
 # AutoScaling the VM-Series on Google Cloud Platform
 
-The Google Cloud Platform Plugin for Panorama 2.0 Beta  helps you configure a connection from
-Panorama to a GCP project and VMs deployed within it. You can use the web interface to
-globally enable monitoring for a GCP project, configure VM monitoring for a GCP project, and
-configure connections to VMs in autoscaling deployments. Once a connection
-is established, the plugin can retrieve predefined or user-defined metadata (predefined
-attributes, user-defined labels for VMs, and user-defined network tags as listed in Attributes,
-Tags, and Labels).
+The Panorama plugin for Google Cloud Platform (GCP) version 2.0 Beta enables Panorama to manage VMSeries
+firewalls securing VM monitoring and auto scaling deployments in GCP.
+
+This topic focuses on an auto scaling use case that requires Google shared VPC technology to create a
+common VPC network composed of a host project containing shared VPC networks and the VM-Series
+firewalls, and a service project containing a sample application deployment. Palo Alto networks supplies
+templates to help you deploy the VM-Series firewalls in the host project and deploy the sample application
+in the service project.
+
+Using Panorama to maintain your GCP managed instance groups has the following benefits:
+- BYOL licenses can be used for the VM-Series firewalls.
+- Panorama automatically monitors the VM-Series firewall status and automatically deregisters a VMSeries
+firewall when it is automatically removed.
+- With Panorama, you can create application enablement policies that protect and control the network.
+Using Panorama for centralized policy and firewall management increases operational efficiency in
+managing and maintaining a distributed network of firewalls.
+
 
 ## Topology
 ![alt text](/Beta/gcp_autoscaling.PNG?raw=true "Topology for the Auto Scaling VM-Series Firewalls on GCP Beta")
