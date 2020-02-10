@@ -41,11 +41,11 @@ resources:
     - appName: app1
 
     ## ssh key PUBLIC - optional
-    sshkey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe0gJHd8okxPGWXsmdTdcZBJNI6ONT/NSz6INs2CNtKWtr+MDh5W79Hn3mlV3I4k2nqkdy3+nEZLbMtlYgt3+jSwtiR53yGHVpkozivnJqQ9YXixirTZYNAnzWPlF6eA4XN9XF6Fnga88GsMWcy2Lv04oB5xlCwpXDSygpaogV4ITb9s2P4Laer3voR1SaoQumDfzadcXzzJE+9lm01+KjTeYItjDjnHWY9r1kIAGi4WIRdM4KruQMCS5lXpT4U1wVC+K56rI+pnk5K6/Zqg3XMJPl3PDoTKXL8t0SRnOKaKV73NR5KnfpsNfwGxG8aQtEkeMCZIxX+6WOnRf/N4K3 rramalinga@apt1.paloaltonetworks.local'
+    sshkey: 'ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe0gJHd8okxPGWXsmdTdcZBJNI6ONT/NSz6INs2CNtKWtr+MDh5W79Hn3mlV3I4k2nqkdy3+nEZLbMtlYgt3+jSwtiR53yGHVpkozivnJqQ9YXixirTZYNAnzWPlF6eA4XN9XF6Fnga88GsMWcy2Lv04oB5xlCwpXDSygpaogV4ITb9s2P4Laer3voR1SaoQumDfzadcXzzJE+9lm01+KjTeYItjDjnHWY9r1kIAGi4WIRdM4KruQMCS5lXpT4U1wVC+K56rI+pnk5K6/Zqg3XMJPl3PDoTKXL8t0SRnOKaKV73NR5KnfpsNfwGxG8aQtEkeMCZIxX+6WOnRf/N4K3 project@apt1.paloaltonetworks.local'
     bootstrap-bucket: rr-bootstrap-1
     image: vmseries-byol-814
     machine-type: n1-standard-4
-    service-account: rramalinga-autoscale@gcp-autoscale-host.iam.gserviceaccount.com 
+    service-account: rramalinga-autoscale@projectservice.iam.gserviceaccount.com 
     fw-instance-tag: vm-series-fw
 
     # Possible values for metrics.
