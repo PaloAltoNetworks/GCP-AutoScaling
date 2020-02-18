@@ -27,6 +27,13 @@ Use of this beta is recommended only for those users already familar with the Go
 The deployment guide can be found [here](
 https://github.com/PaloAltoNetworks/GCP-AutoScaling/blob/master/Beta/Autoscaling-On-GCP.pdf)
 
+**Training Videos**   
+- Firewall	***5:34***  [CLICK HERE](
+https://github.com/PaloAltoNetworks/GCP-AutoScaling/tree/master/Beta/Videos/GCP_AutoScale_Demo_Part1.mp4)    
+- Application		***5:18***  [CLICK HERE](
+https://github.com/PaloAltoNetworks/GCP-AutoScaling/tree/master/Beta/Videos/GCP_AutoScale_Demo_Part2.mp4) 
+
+
 
 # Support Policy
 ***Community-Supported aka Best Effort:***      
