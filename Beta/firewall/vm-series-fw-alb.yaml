@@ -53,7 +53,7 @@ resources:
         - '/app2/*' 
 
     ## ssh key PUBLIC to login to the firewall.
-    sshkey: 'admin:ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDe0gJHd8okxPGWXsmdTdcZBJNI6ONT/NSz6INs2CNtKWtr+MDh5W79Hn3mlV3I4k2nqkdy3+nEZLbMtlYgt3+jSwtiR53yGHVpkozivnJqQ9YXixirTZYNAnzWPlF6eA4XN9XF6Fnga88GsMWcy2Lv04oB5xlCwpXDSygpaogV4ITb9s2P4Laer3voR1SaoQumDfzadcXzzJE+9lm01+KjTeYItjDjnHWY9r1kIAGi4WIRdM4KruQMCS5lXpT4U1wVC+K56rI+pnk5K6/Zqg3XMJPl3PDoTKXL8t0SRnOKaKV73NR5KnfpsNfwGxG8aQtEkeMCZIxX+6WOnRf/N4K3 project@apt1.paloaltonetworks.local'
+    sshkey: 'admin:ssh-rsa ReferenceSSHKEYxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx/NSz6INs2CNtKWtr+MDh5W79Hn3mlV3I4k2nqkdy3+nEZLbMtlYgt3+jSwtiR53yGHVpkozivnJqQ9YXixirTZYNAnzWPlF6eA4XN9XF6Fnga88GsMWcy2Lv04oB5xlCwpXDSygpaogV4ITb9s2P4Laer3voR1SaoQumDfzadcXzzJE+9lm01+KjTeYItjDjnHWY9r1kIAGi4WIRdM4KruQMCS5lXpT4U1wVC+K56rI+pnk5K6/Zqg3XMJPl3PDoTKXL8t0SRnOKaKV73NR5KnfpsNfwGxG8aQtEkeMCZIxX+6WOnRf/N4K3 project@apt1.paloaltonetworks.local'
 
     # GCP storage bucket where the bootstrap package is hosted.
     bootstrap-bucket: rr-bootstrap-1
@@ -70,7 +70,7 @@ resources:
     #     Storage Admin
     #     Monitoring Metric Writer
     #     Stackdriver Account Editor
-    service-account: rramalinga-autoscale@projectservice.iam.gserviceaccount.com 
+    service-account: referenceaccount@projectservice.iam.gserviceaccount.com 
     
     fw-instance-tag: vm-series-fw
     # Possible values for metrics.
@@ -90,8 +90,8 @@ resources:
     untrust-network-cidr: 172.22.1.0/24
     trust-network-cidr: 172.22.3.0/24
     mgmt-network-access-source-range:
-    - 199.167.54.229/32
-    - 199.167.52.5/32
+    - 1.1.1.1/32
+    - 1.1.1.2/32
     mgmt-network-access-ports:
     - 22
     - 443
