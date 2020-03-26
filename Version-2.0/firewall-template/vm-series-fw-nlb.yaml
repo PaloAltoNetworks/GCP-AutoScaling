@@ -1,0 +1,88 @@
+# Copyright 2016 Google Inc. All rights reserved.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+imports:
+- path: vm-series.py
+- path: network.py
+- path: subnetwork.py
+- path: external-appln-lb.py
+- path: external-network-lb.py
+- path: firewall.py
+- path: vm-series-fw.py
+- path: cloud-nat.py
+- path: pubsub.py
+resources:
+- name: panorama-pubsub
+  type: pubsub.py
+- name: vm-series-fw
+  type: vm-series-fw.py
+  properties:
+    region: us-east1
+    zones:
+    - us-east1-b
+    # Do not modify the lb-type field.
+    lb-type: nlb 
+    cloud-nat: yes
+    forwarding-rule-port: 80 
+
+    # Only one app is allowed.
+    urlPath-namedPort-maps: 
+    - appName: app1
+
+    ## ssh key PUBLIC - optional
+    sshkey: 'admin:ssh-rsa <PASTE YOUR PUBLIC SSH KEY>'
+    bootstrap-bucket: <bts-bucket-name>
+    image: vmseries-byol-901
+    machine-type: n1-standard-4
+    service-account: <service-account-name>
+    fw-instance-tag: vm-series-fw
+
+    # Possible values for metrics.
+    #     panSessionActive
+    #     panSessionUtilization
+    #     DataPlaneCPUUtilizationPct
+    #     DataPlanePacketBufferUtilization
+    #     panSessionUtilization
+    metric: custom.googleapis.com/VMSeries/panSessionActive
+    max-size: 2 
+    min-size: 1
+    target-type: GAUGE
+    util-target: 100 
+
+    # Greenfield deployment
+    mgmt-network-cidr: 172.22.2.0/24
+    untrust-network-cidr: 172.22.1.0/24
+    trust-network-cidr: 172.22.3.0/24
+    mgmt-network-access-source-range:
+    - <permitted-ip-range-1>
+    - <permitted-ip-range-2>
+    mgmt-network-access-ports:
+    - 22
+    - 443
+
+    ###Uncomment followings for using existing networks/subnets
+    #mgmt-network:  my-mgmt-network
+    #mgmt-subnet:   my-mgmt-subnet
+    #trust-network: my-trust-network
+    #trust-subnet:  my-trust-subnet
+    #untrust-network: my-untrust-network
+    #untrust-subnet:  my-untrust-subnet
+outputs:
+- name: trust-network-name
+  value: $(ref.vm-series-fw.trust-network-name)                 
+- name: trust-subnet-name
+  value: $(ref.vm-series-fw.trust-subnet-name)                 
+- name: deployment-name
+  value: $(ref.vm-series-fw.deployment-name)                 
+- name: panorama-pubsub-topic
+  value: $(ref.panorama-pubsub.vm-series-fw-template-pubsub-topic)

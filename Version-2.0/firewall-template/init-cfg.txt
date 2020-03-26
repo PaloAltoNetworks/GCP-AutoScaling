@@ -1,0 +1,11 @@
+type=dhcp-client
+op-command-modes=mgmt-interface-swap
+hostname=<host-name>
+vm-auth-key=<vmauthkey>
+panorama-server=<panorama-ip>
+tplname=<tmplstk-name>
+dgname=<dg-name>
+dhcp-send-hostname=yes
+dhcp-send-client-id=yes
+dhcp-accept-server-hostname=yes
+dhcp-accept-server-domain=yes
