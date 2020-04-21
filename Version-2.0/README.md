@@ -32,7 +32,8 @@ https://github.com/PaloAltoNetworks/GCP-AutoScaling/blob/master/Version-2.0/Auto
 https://github.com/PaloAltoNetworks/GCP-AutoScaling/tree/master/Version-2.0/videos/GCP_AutoScale_Demo_Part1.mp4)    
 - Application		***5:18***  [CLICK HERE](
 https://github.com/PaloAltoNetworks/GCP-AutoScaling/tree/master/Version-2.0/videos/GCP_AutoScale_Demo_Part2.mp4) 
-
+- GKE Deployment		***10:27***  [CLICK HERE](
+https://github.com/PaloAltoNetworks/GCP-AutoScaling/blob/master/Version-2.0/Videos/GCP_GKE_Demo.mp4) 
 
 
 # Support Policy

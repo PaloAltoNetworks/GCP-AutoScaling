@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: web2
+  namespace: default
+  annotations:
+    cloud.google.com/load-balancer-type: "Internal"
+  labels:
+    panw-named-port-port2: "81"
+spec:
+  ports:
+  # the port that this service should serve on
+  - name: port2
+    port: 81
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    run: web2
+  type: LoadBalancer
